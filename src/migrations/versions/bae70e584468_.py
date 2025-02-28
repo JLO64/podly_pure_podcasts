@@ -23,6 +23,7 @@ def upgrade():
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.Column("title", sa.Text(), nullable=False),
         sa.Column("description", sa.Text(), nullable=True),
+        sa.Column("image", sa.Text(), nullable=True),
         sa.Column("author", sa.Text(), nullable=True),
         sa.Column("rss_url", sa.Text(), nullable=False, unique=True),
         sa.PrimaryKeyConstraint("id"),
