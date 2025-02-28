@@ -17,6 +17,7 @@ class Feed(db.Model):  # type: ignore[name-defined, misc]
     title = db.Column(db.Text, nullable=False)
     description = db.Column(db.Text)
     author = db.Column(db.Text)
+    image = db.Column(db.Text) 
     rss_url = db.Column(db.Text, unique=True, nullable=False)
 
     posts = db.relationship(

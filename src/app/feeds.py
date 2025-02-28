@@ -70,6 +70,7 @@ def add_feed(feed_data: feedparser.FeedParserDict) -> Feed:
             title=feed_data.feed.title,
             description=feed_data.feed.get("description", ""),
             author=feed_data.feed.get("author", ""),
+            image=feed_data.feed.get("image", ""),
             rss_url=feed_data.href,
         )
         db.session.add(feed)
@@ -148,9 +149,10 @@ def generate_feed_xml(feed: Feed) -> Any:
     logger.info(f"Generating XML for feed with ID: {feed.id}")
     items = [feed_item(post) for post in feed.posts]  # type: ignore[attr-defined]
     rss_feed = PyRSS2Gen.RSS2(
-        title="[podly] " + feed.title,
+        title=feed.title,
         link=url_for("main.get_feed", f_id=feed.id, _external=True),
         description=feed.description,
+        image=feed.image,
         lastBuildDate=datetime.datetime.now(),
         items=items,
     )
