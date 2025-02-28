@@ -70,7 +70,7 @@ def add_feed(feed_data: feedparser.FeedParserDict) -> Feed:
             title=feed_data.feed.title,
             description=feed_data.feed.get("description", ""),
             author=feed_data.feed.get("author", ""),
-            image=feed_data.feed.get("image", ""),
+            image=feed_data.feed.image.get("href", ""),
             rss_url=feed_data.href,
         )
         db.session.add(feed)
@@ -152,7 +152,7 @@ def generate_feed_xml(feed: Feed) -> Any:
         title=feed.title,
         link=url_for("main.get_feed", f_id=feed.id, _external=True),
         description=feed.description,
-        image=feed.image,
+        image = PyRSS2Gen.Image(url=feed.image, title=feed.title, link=url_for("main.get_feed", f_id=feed.id, _external=True)),
         lastBuildDate=datetime.datetime.now(),
         items=items,
     )
